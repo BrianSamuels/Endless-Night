@@ -19,6 +19,14 @@ public class Player : MonoBehaviour
     public float holdingJumpTimer = 0.0f;
     public float jumpGroundThreshold = 1;
 
+    public bool isDead = false;
+
+    public LayerMask groundsLayerMask;
+    public LayerMask obstaclesLayerMask;
+
+    GroundFall fall;
+
+    CameraController cameraController;
     //public float speed;
     //private float Move;
 
@@ -32,6 +40,7 @@ public class Player : MonoBehaviour
         //rb = GetComponent<Rigidbody2D>();
         //spriter = GetComponent<SpriteRenderer>();
         //anim = GetComponent<Animator>();
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -50,6 +59,14 @@ public class Player : MonoBehaviour
                 velocity.y = jumpVelocity;
                 isHoldingJump = true;
                 holdingJumpTimer = 0;
+
+                //make sure player isn't falling while jumping
+                if(fall != null)
+                {
+                    fall.player = null;
+                    fall = null;
+                    cameraController.stopShaking();
+                }
             }
 
         }
@@ -64,7 +81,16 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 pos = transform.position;
-        
+        if (isDead)
+        {
+            return;
+        }
+
+        if(pos.y < -20)
+        {
+            isDead = true;
+        }
+
         if (!isGrounded)
         {
             //Forces Jump button to false if held for too long
@@ -93,7 +119,7 @@ public class Player : MonoBehaviour
 
             float rayDistance = velocity.y * Time.fixedDeltaTime;
 
-            RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+            RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, groundsLayerMask);
 
             if(hit2D.collider != null)
             {
@@ -102,14 +128,38 @@ public class Player : MonoBehaviour
 
                 if(ground != null) 
                 {
-                    groundHeight = ground.groundHeight;
-                    velocity.y = 0;
-                    isGrounded = true;
+                    if(pos.y >= ground.groundHeight)
+                    {
+                        groundHeight = ground.groundHeight;
+                        pos.y = groundHeight;
+                        velocity.y = 0;
+                        isGrounded = true;
+                    }
+                    fall = ground.GetComponent<GroundFall>();
+                    if(fall != null)
+                    {
+                        fall.player = this;
+                        cameraController.startShaking();
+                    }
                 }
             }
 
             //Debug for checking if there is ground beneath player
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
+
+            Vector2 wallOrigin = new Vector2(pos.x, pos.y);
+            RaycastHit2D wallHit = Physics2D.Raycast(wallOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime);
+            if (wallHit.collider != null)
+            {
+                Ground ground = wallHit.collider.GetComponent<Ground>();
+                if(ground != null)
+                {
+                    if (pos.y < ground.groundHeight)
+                    {
+                        velocity.x = 0;
+                    }
+                }
+            }
         }
 
         // Keeps track of distance traveled
@@ -141,7 +191,13 @@ public class Player : MonoBehaviour
 
             float rayDistance = velocity.y * Time.fixedDeltaTime;
 
-            RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+            //Adjust rayDistance if a ground is falling
+            if (fall != null)
+            {
+                rayDistance = -fall.fallSpeed * Time.fixedDeltaTime;
+            }
+
+            RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, groundsLayerMask);
 
             //Player falls if not colliding with anything
             if (hit2D.collider == null)
@@ -153,10 +209,35 @@ public class Player : MonoBehaviour
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
 
-        
+        //Checks if player hit an obstacle
+        Vector2 obstOrigin = new Vector2(pos.x, pos.y);
+        RaycastHit2D obstHitX = Physics2D.Raycast(obstOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, obstaclesLayerMask);
+        if (obstHitX.collider != null)
+        {
+            obstacle obstacles = obstHitX.collider.GetComponent<obstacle>();
+            if (obstacles != null)
+            {
+                hitObstacle(obstacles);
+            }
+        }
 
+        RaycastHit2D obstHitY = Physics2D.Raycast(obstOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstaclesLayerMask);
+        if (obstHitY.collider != null)
+        {
+            obstacle obstacles = obstHitY.collider.GetComponent<obstacle>();
+            if (obstacles != null)
+            {
+                hitObstacle(obstacles);
+            }
+        }
         //Resets player position
         transform.position = pos;
+    }
+
+    void hitObstacle(obstacle obstacles)
+    {
+        Destroy(obstacles.gameObject);
+        velocity.x *= 0.7f;
     }
     /*
     private void LateUpdate()

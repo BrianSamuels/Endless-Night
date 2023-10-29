@@ -30,10 +30,16 @@ public class Parallax : MonoBehaviour
         //Moves scene object in the opposite direction of the player
         pos.x -= sceneVelocity * Time.fixedDeltaTime;
 
-        if(pos.x <= -48)
+        if(pos.x <= -25)
+        {
+            pos.x = 80;
+        }
+        /*
+        f(pos.x <= -48)
         {
             pos.x = 114;
-        }
+        }        
+        */
         transform.position = pos;
     }
 }
