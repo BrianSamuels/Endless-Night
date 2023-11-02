@@ -19,7 +19,6 @@ public class UIController : MonoBehaviour
 
         finalDistanceText = GameObject.Find("FinalDistance").GetComponent<TMP_Text>();
 
-        //results = GameObject.Find("Results").GetComponent<GameObject>();
         results.SetActive(false);
     }   
     // Start is called before the first frame update
@@ -31,6 +30,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Record and display player distance progression
         int distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " m";
 
@@ -41,9 +41,11 @@ public class UIController : MonoBehaviour
         }
     }
 
+
+    //Scene controller
     public void Quit()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Retry()

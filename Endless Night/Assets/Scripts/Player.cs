@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float acceleration = 10;
     public float distance = 0;
     public float jumpVelocity = 20;
-    public float groundHeight = 10;
+    public float groundHeight = 12;
     public bool isGrounded = false;
     public bool isHoldingJump = false;
     public float holdJumpTimer = 0.4f;

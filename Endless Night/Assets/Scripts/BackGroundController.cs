@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Parallax : MonoBehaviour
+public class BackGroundController : MonoBehaviour
 {   
     //Represents if on the same or different layer than player
     public float depth = 1;
@@ -22,24 +22,19 @@ public class Parallax : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Sets the velocity of scene object to be less than the players velocity
-        float sceneVelocity = player.velocity.x / depth;
+        //Sets the speed of the background objects to be less than the players velocity
+        float backGroundSpeed = player.velocity.x / depth;
 
         Vector2 pos = transform.position;
 
-        //Moves scene object in the opposite direction of the player
-        pos.x -= sceneVelocity * Time.fixedDeltaTime;
+        //Moves background objects in the opposite direction of the player
+        pos.x -= backGroundSpeed * Time.fixedDeltaTime;
 
+        //Resets background from left to right when out of bounds
         if(pos.x <= -25)
         {
             pos.x = 80;
         }
-        /*
-        f(pos.x <= -48)
-        {
-            pos.x = 114;
-        }        
-        */
         transform.position = pos;
     }
 }

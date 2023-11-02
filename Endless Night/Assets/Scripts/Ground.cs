@@ -76,7 +76,7 @@ public class Ground : MonoBehaviour
         maxGroundHeight += groundHeight;
         float minGroundHeight = 1;
         //New random ground height 
-        float newGroundHeight = Random.Range(minGroundHeight, maxGroundHeight);
+        float newGroundHeight = Random.Range(minGroundHeight, maxGroundHeight-10);
 
         pos.y = newGroundHeight - newCollider.size.y / 2;
         //makes sure new ground height isn't too high
