@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
 
     public GameObject results;
     TMP_Text finalDistanceText;
+    TMP_Text finalKillCountText;
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -21,6 +22,7 @@ public class UIController : MonoBehaviour
         killCountText = GameObject.Find("KillCountText").GetComponent<TMP_Text>();
 
         finalDistanceText = GameObject.Find("FinalDistance").GetComponent<TMP_Text>();
+        finalKillCountText = GameObject.Find("FinalKillCount").GetComponent<TMP_Text>();
 
         results.SetActive(false);
     }   
@@ -39,6 +41,7 @@ public class UIController : MonoBehaviour
         {
             results.SetActive(true);
             finalDistanceText.text = distance + " m";
+            finalKillCountText.text = kills + " kills";
         }
     }
 
@@ -52,5 +55,10 @@ public class UIController : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void Retry2()
+    {
+        SceneManager.LoadScene("SampleScene 1");
     }
 }
