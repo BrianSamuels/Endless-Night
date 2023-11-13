@@ -6,7 +6,8 @@ public class BackGroundController : MonoBehaviour
 {   
     //Represents if on the same or different layer than player
     public float depth = 1;
-
+    public float exitDistance;
+    public float enterDistance;
     Player player;
 
     private void Awake()
@@ -31,9 +32,17 @@ public class BackGroundController : MonoBehaviour
         pos.x -= backGroundSpeed * Time.fixedDeltaTime;
 
         //Resets background from left to right when out of bounds
-        if(pos.x <= -25)
+        if(pos.x <= exitDistance)
         {
-            pos.x = 80;
+            if(this.GetComponent<SpriteRenderer>().flipX == false)
+            {
+                this.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                this.GetComponent<SpriteRenderer>().flipX = false;
+            }
+            pos.x = enterDistance;
         }
         transform.position = pos;
     }

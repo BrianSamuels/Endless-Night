@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
+    
     Player player;
     //TMP = text mesh pro
     TMP_Text distanceText;
+    TMP_Text killCountText;
 
     public GameObject results;
     TMP_Text finalDistanceText;
@@ -16,23 +18,22 @@ public class UIController : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<Player>();
         distanceText = GameObject.Find("DistanceText").GetComponent<TMP_Text>();
+        killCountText = GameObject.Find("KillCountText").GetComponent<TMP_Text>();
 
         finalDistanceText = GameObject.Find("FinalDistance").GetComponent<TMP_Text>();
 
         results.SetActive(false);
     }   
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        //Record and display player distance progression
+        //Record and display player progression
         int distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " m";
+
+        int kills = Mathf.FloorToInt(player.killCount);
+        killCountText.text = kills + " kills";
 
         if (player.isDead)
         {

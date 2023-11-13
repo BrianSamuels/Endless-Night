@@ -9,6 +9,7 @@ public class Ground : MonoBehaviour
     public float groundHeight;
     public float groundRight;
     public float screenRight;
+    public int maxObstacleNum;
     BoxCollider2D colliderG;
 
     bool isGroundGenerated = false;
@@ -21,11 +22,6 @@ public class Ground : MonoBehaviour
         colliderG = GetComponent<BoxCollider2D>();
         
         screenRight = Camera.main.transform.position.x * 2;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -120,7 +116,7 @@ public class Ground : MonoBehaviour
         }
 
         //How many obstacles will be created
-        int obstacleNum = Random.Range(0, 4);
+        int obstacleNum = Random.Range(0, maxObstacleNum);
         for (int i = 0; i < obstacleNum; i++)
         {
             GameObject box = Instantiate(obstacleHolder.gameObject);

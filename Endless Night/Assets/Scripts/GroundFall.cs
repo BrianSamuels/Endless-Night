@@ -11,17 +11,7 @@ public class GroundFall : MonoBehaviour
     public List<obstacle> obstacles = new List<obstacle>();
 
     public Player player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
     private void FixedUpdate()
     {
         if (isFalling)
@@ -38,6 +28,7 @@ public class GroundFall : MonoBehaviour
                 player.transform.position = playerPos;
             }
 
+            //Make sure any obstacles fall with the ground
             foreach (obstacle o in obstacles)
             {
                 if (o != null) 

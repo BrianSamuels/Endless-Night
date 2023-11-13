@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float maxAcceleration = 10;
     public float acceleration = 10;
     public float distance = 0;
+    public float killCount = 0;
     public float jumpVelocity = 20;
     public float groundHeight = 12;
     public bool isGrounded = false;
@@ -237,6 +238,7 @@ public class Player : MonoBehaviour
     void hitObstacle(obstacle obstacles)
     {
         Destroy(obstacles.gameObject);
+        killCount++;
         velocity.x *= 0.7f;
     }
     /*
