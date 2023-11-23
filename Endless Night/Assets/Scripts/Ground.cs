@@ -14,7 +14,7 @@ public class Ground : MonoBehaviour
 
     bool isGroundGenerated = false;
 
-    public obstacle obstacleHolder;
+    public List<enemy> enemyHolder = new List<enemy>();
 
     private void Awake()
     {
@@ -115,24 +115,24 @@ public class Ground : MonoBehaviour
             fall.fallSpeed = Random.Range(1.0f, 3.0f);
         }
 
-        //How many obstacles will be created
+        //How many enemies will be created
         int obstacleNum = Random.Range(0, maxObstacleNum);
         for (int i = 0; i < obstacleNum; i++)
         {
-            GameObject box = Instantiate(obstacleHolder.gameObject);
-            float y = newGround.groundHeight;
+            GameObject  enmy = Instantiate(enemyHolder[Random.Range(0, enemyHolder.Count)].gameObject);
+            float y = newGround.groundHeight + 1;
             float halfWidth = newCollider.size.x / 2 - 1;
             float left = build.transform.position.x - halfWidth;
             float right = build.transform.position.x + halfWidth;
             float x = Random.Range(left, right);
-            Vector2 boxPos = new Vector2(x, y);
-            box.transform.position = boxPos;
+            Vector2 enmyPos = new Vector2(x, y);
+            enmy.transform.position = enmyPos;
 
-            //update obstacles if ground is falling
+            //update enemies if ground is falling
             if (fall != null) 
             { 
-                obstacle o = box.GetComponent<obstacle>();
-                fall.obstacles.Add(o);
+                enemy o = enmy.GetComponent<enemy>();
+                fall.enemies.Add(o);
             }
         }
     }

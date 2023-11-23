@@ -54,11 +54,16 @@ public class UIController : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Level1");
     }
 
     public void Retry2()
     {
-        SceneManager.LoadScene("SampleScene 1");
+        SceneManager.LoadScene("Level2");
+    }
+
+    public void Retry3()
+    {
+        SceneManager.LoadScene("Level3");
     }
 }

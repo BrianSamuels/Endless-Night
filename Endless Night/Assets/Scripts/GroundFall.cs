@@ -8,7 +8,7 @@ public class GroundFall : MonoBehaviour
 
     public float fallSpeed = 1;
 
-    public List<obstacle> obstacles = new List<obstacle>();
+    public List<enemy> enemies = new List<enemy>();
 
     public Player player;
    
@@ -29,7 +29,7 @@ public class GroundFall : MonoBehaviour
             }
 
             //Make sure any obstacles fall with the ground
-            foreach (obstacle o in obstacles)
+            foreach (enemy o in enemies)
             {
                 if (o != null) 
                 { 

@@ -11,14 +11,20 @@ public class MainMenuController : MonoBehaviour
     {
         audioData = GetComponent<AudioSource>();
         audioData.playOnAwake = true;
+        audioData.loop = true;
     }
     public void play()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Level1");
     }
     public void play2()
     {
-        SceneManager.LoadScene("SampleScene 1");
+        SceneManager.LoadScene("Level2");
+    }
+
+    public void play3()
+    {
+        SceneManager.LoadScene("Level3");
     }
     public void levelSelector()
     {
@@ -36,5 +42,17 @@ public class MainMenuController : MonoBehaviour
     public void storyMenu()
     {
         SceneManager.LoadScene("StoryMenu");
+    }
+
+    public void mute()
+    {
+        if (audioData.mute == false)
+        {
+            audioData.mute = true;
+        }
+        else if(audioData.mute == true)
+        {
+            audioData.mute = false;
+        }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Animator anim;
     public float gravity;
     public Vector2 velocity;
     public float maxVelocity = 100;
@@ -13,12 +14,15 @@ public class Player : MonoBehaviour
     public float killCount = 0;
     public float jumpVelocity = 20;
     public float groundHeight = 12;
+    public bool isSliding = false;
+    public bool isAttacking = false;
     public bool isGrounded = false;
     public bool isHoldingJump = false;
     public float holdJumpTimer = 0.4f;
     public float maxHoldJumpTimer = 0.4f;
     public float holdingJumpTimer = 0.0f;
     public float jumpGroundThreshold = 1;
+   
 
     public bool isDead = false;
 
@@ -33,7 +37,7 @@ public class Player : MonoBehaviour
 
     //SpriteRenderer spriter;
     //Animator anim;
-    //private Rigidbody2D rb;
+    //public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -50,33 +54,7 @@ public class Player : MonoBehaviour
         //Move = Input.GetAxis("Horizontal");
         //rb.velocity = new Vector2(speed * Move, rb.velocity.y);
         Vector2 pos = transform.position;
-        float groundDistance = Mathf.Abs(pos.y - groundHeight);
-        if (isGrounded || groundDistance <= jumpGroundThreshold)
-        {
-            //Holding jump button
-            if (Input.GetKey(KeyCode.Space))
-            {
-                isGrounded = false;
-                velocity.y = jumpVelocity;
-                isHoldingJump = true;
-                holdingJumpTimer = 0;
-
-                //make sure player isn't falling while jumping
-                if(fall != null)
-                {
-                    fall.player = null;
-                    fall = null;
-                    cameraController.stopShaking();
-                }
-            }
-
-        }
-
-        //Not holding jump button
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            isHoldingJump = false;
-        }
+        playerController(pos);
     }
 
     private void FixedUpdate()
@@ -101,6 +79,7 @@ public class Player : MonoBehaviour
                 if(holdingJumpTimer >= holdJumpTimer)
                 {
                     isHoldingJump = false;
+                    anim.SetBool("isJumping", false);
                 }
             }
 
@@ -135,6 +114,7 @@ public class Player : MonoBehaviour
                         pos.y = groundHeight;
                         velocity.y = 0;
                         isGrounded = true;
+                        anim.SetBool("isGrounded", true);
                     }
                     fall = ground.GetComponent<GroundFall>();
                     if(fall != null)
@@ -204,54 +184,124 @@ public class Player : MonoBehaviour
             if (hit2D.collider == null)
             {
                 isGrounded = false;
+                anim.SetBool("isGrounded", false);
             }
 
             //Debug for checking if not on ground
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
 
-        //Checks if player hit an obstacle
-        Vector2 obstOrigin = new Vector2(pos.x, pos.y);
-        RaycastHit2D obstHitX = Physics2D.Raycast(obstOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, obstaclesLayerMask);
-        if (obstHitX.collider != null)
-        {
-            obstacle obstacles = obstHitX.collider.GetComponent<obstacle>();
-            if (obstacles != null)
-            {
-                hitObstacle(obstacles);
-            }
-        }
-
-        RaycastHit2D obstHitY = Physics2D.Raycast(obstOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstaclesLayerMask);
-        if (obstHitY.collider != null)
-        {
-            obstacle obstacles = obstHitY.collider.GetComponent<obstacle>();
-            if (obstacles != null)
-            {
-                hitObstacle(obstacles);
-            }
-        }
+        enemyCollisionDetection(pos);
+        
         //Resets player position
         transform.position = pos;
     }
 
-    void hitObstacle(obstacle obstacles)
+    void playerController(Vector2 pos)
     {
-        Destroy(obstacles.gameObject);
+        float groundDistance = Mathf.Abs(pos.y - groundHeight);
+        if (isGrounded || groundDistance <= jumpGroundThreshold)
+        {
+            //Holding jump button
+            if (Input.GetKey(KeyCode.J))
+            {
+
+                isGrounded = false;
+                anim.SetBool("isGrounded", false);
+                velocity.y = jumpVelocity;
+                isHoldingJump = true;
+                anim.SetBool("isJumping", true);
+                holdingJumpTimer = 0;
+
+                //make sure player isn't falling while jumping
+                if (fall != null)
+                {
+                    fall.player = null;
+                    fall = null;
+                    cameraController.stopShaking();
+                }
+            }
+
+            //Controls player attack
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                isAttacking = true;
+                anim.SetBool("isAttacking", true);
+                anim.speed = 2;
+            }
+            if (Input.GetKeyUp(KeyCode.K))
+            {
+                isAttacking = false;
+                anim.SetBool("isAttacking", false);
+                anim.speed = 1;
+            }
+
+            //Controls player slide
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                isSliding = true;
+                anim.SetBool("isSliding", true);
+                //anim.speed = 2;
+            }
+            if (Input.GetKeyUp(KeyCode.L))
+            {
+                isSliding = false;
+                anim.SetBool("isSliding", false);
+                //anim.speed = 1;
+            }
+        }
+
+        //Not holding jump button
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            isHoldingJump = false;
+            anim.SetBool("isJumping", false);
+        }
+    }
+
+
+    void enemyCollisionDetection(Vector2 pos)
+    {
+        //Checks if player hit an obstacle
+        Vector2 enmyOrigin = new Vector2(pos.x, pos.y);
+        RaycastHit2D obstHitX = Physics2D.Raycast(enmyOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, obstaclesLayerMask);
+        if (obstHitX.collider != null)
+        {
+            enemy enemies = obstHitX.collider.GetComponent<enemy>();
+            if (enemies != null)
+            {
+                hitEnemy(enemies);
+            }
+        }
+
+        RaycastHit2D obstHitY = Physics2D.Raycast(enmyOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstaclesLayerMask);
+        if (obstHitY.collider != null)
+        {
+            enemy enemies = obstHitY.collider.GetComponent<enemy>();
+            if (enemies != null)
+            {
+                hitEnemy(enemies);
+            }
+        }
+    }
+    
+    void hitEnemy(enemy enemies)
+    {
+        Destroy(enemies.gameObject);
         killCount++;
         velocity.x *= 0.7f;
     }
+    
     /*
-    private void LateUpdate()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        
-        anim.SetFloat("Speed", Move);
-
-        if(Move != 0)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            spriter.flipX = Move < 0;
+            Debug.Log("collision detected");
+            Destroy(collision.gameObject);
+            killCount++;
+            velocity.x *= 0.7f;
         }
-        
     }
     */
 }
