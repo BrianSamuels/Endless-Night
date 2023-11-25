@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     //TMP = text mesh pro
     TMP_Text distanceText;
     TMP_Text killCountText;
+    TMP_Text lifeCountText;
 
     public GameObject results;
     TMP_Text finalDistanceText;
@@ -20,6 +21,7 @@ public class UIController : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         distanceText = GameObject.Find("DistanceText").GetComponent<TMP_Text>();
         killCountText = GameObject.Find("KillCountText").GetComponent<TMP_Text>();
+        lifeCountText = GameObject.Find("LivesText").GetComponent<TMP_Text>();
 
         finalDistanceText = GameObject.Find("FinalDistance").GetComponent<TMP_Text>();
         finalKillCountText = GameObject.Find("FinalKillCount").GetComponent<TMP_Text>();
@@ -36,6 +38,9 @@ public class UIController : MonoBehaviour
 
         int kills = Mathf.FloorToInt(player.killCount);
         killCountText.text = kills + " kills";
+
+        int lives = Mathf.FloorToInt(player.lives);
+        lifeCountText.text = lives + " lives";
 
         if (player.isDead)
         {

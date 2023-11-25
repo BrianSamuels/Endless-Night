@@ -120,7 +120,7 @@ public class Ground : MonoBehaviour
         for (int i = 0; i < obstacleNum; i++)
         {
             GameObject  enmy = Instantiate(enemyHolder[Random.Range(0, enemyHolder.Count)].gameObject);
-            float y = newGround.groundHeight + 1;
+            float y = newGround.groundHeight + 1.8f;
             float halfWidth = newCollider.size.x / 2 - 1;
             float left = build.transform.position.x - halfWidth;
             float right = build.transform.position.x + halfWidth;

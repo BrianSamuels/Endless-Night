@@ -12,8 +12,10 @@ public class Player : MonoBehaviour
     public float acceleration = 10;
     public float distance = 0;
     public float killCount = 0;
+    public int lives = 1;
     public float jumpVelocity = 20;
-    public float groundHeight = 12;
+    public float groundHeight = 15;
+    public bool wasAttacked = false;
     public bool isSliding = false;
     public bool isAttacking = false;
     public bool isGrounded = false;
@@ -22,8 +24,8 @@ public class Player : MonoBehaviour
     public float maxHoldJumpTimer = 0.4f;
     public float holdingJumpTimer = 0.0f;
     public float jumpGroundThreshold = 1;
-   
 
+    public float groundOffsetY = 2f;
     public bool isDead = false;
 
     public LayerMask groundsLayerMask;
@@ -62,13 +64,22 @@ public class Player : MonoBehaviour
         Vector2 pos = transform.position;
         if (isDead)
         {
-            return;
+            anim.Play("death");
+            //return;
+        }
+        if (!isDead)
+        {
+            wasAttacked = false;
+            anim.SetBool("wasAttacked", false);
         }
 
-        if(pos.y < -20)
+        if (pos.y < -2 || lives == 0)
         {
             isDead = true;
+            velocity.x = 0;
+            //anim.SetBool("isDead", true);
         }
+
 
         if (!isGrounded)
         {
@@ -93,7 +104,7 @@ public class Player : MonoBehaviour
 
             //Raycast used for jump, to detect if their is ground beneath player
             //Player ray origin located just in front of the player
-            Vector2 rayOrigin = new Vector2(pos.x + 0.7f, pos.y);
+            Vector2 rayOrigin = new Vector2(pos.x + 0.7f, pos.y - groundOffsetY);
 
             Vector2 rayDirection = Vector2.up;
 
@@ -110,7 +121,7 @@ public class Player : MonoBehaviour
                 {
                     if(pos.y >= ground.groundHeight)
                     {
-                        groundHeight = ground.groundHeight;
+                        groundHeight = ground.groundHeight + groundOffsetY;
                         pos.y = groundHeight;
                         velocity.y = 0;
                         isGrounded = true;
@@ -128,7 +139,7 @@ public class Player : MonoBehaviour
             //Debug for checking if there is ground beneath player
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
 
-            Vector2 wallOrigin = new Vector2(pos.x, pos.y);
+            Vector2 wallOrigin = new Vector2(pos.x, pos.y - groundOffsetY);
             RaycastHit2D wallHit = Physics2D.Raycast(wallOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime);
             if (wallHit.collider != null)
             {
@@ -148,6 +159,13 @@ public class Player : MonoBehaviour
         //pos.x += velocity.x * Time.fixedDeltaTime;
 
         distance += velocity.x * Time.fixedDeltaTime;
+        /*
+        float checkDist = distance -1;
+        if(distance > checkDist)
+        {
+
+        }
+        */
         //distance += pos.x;
         if (isGrounded)
         {
@@ -166,7 +184,7 @@ public class Player : MonoBehaviour
                 velocity.x = maxVelocity;
             }
 
-            Vector2 rayOrigin = new Vector2(pos.x - 0.7f, pos.y);
+            Vector2 rayOrigin = new Vector2(pos.x - 0.7f, pos.y - groundOffsetY);
 
             Vector2 rayDirection = Vector2.up;
 
@@ -190,8 +208,8 @@ public class Player : MonoBehaviour
             //Debug for checking if not on ground
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
-
-        enemyCollisionDetection(pos);
+    
+        enemyCollisionDetection(pos, isAttacking);
         
         //Resets player position
         transform.position = pos;
@@ -260,15 +278,19 @@ public class Player : MonoBehaviour
     }
 
 
-    void enemyCollisionDetection(Vector2 pos)
+    void enemyCollisionDetection(Vector2 pos, bool attacking)
     {
-        //Checks if player hit an obstacle
-        Vector2 enmyOrigin = new Vector2(pos.x, pos.y);
+        //Checks if player hits/attacks an enemy
+        Vector2 enmyOrigin = new Vector2(pos.x, pos.y - groundOffsetY);
         RaycastHit2D obstHitX = Physics2D.Raycast(enmyOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, obstaclesLayerMask);
         if (obstHitX.collider != null)
         {
             enemy enemies = obstHitX.collider.GetComponent<enemy>();
-            if (enemies != null)
+            if (enemies != null && attacking == true)
+            {
+                atkEnemy(enemies);
+            }
+            else if (enemies != null && attacking == false)
             {
                 hitEnemy(enemies);
             }
@@ -278,7 +300,11 @@ public class Player : MonoBehaviour
         if (obstHitY.collider != null)
         {
             enemy enemies = obstHitY.collider.GetComponent<enemy>();
-            if (enemies != null)
+            if (enemies != null && attacking == true)
+            {
+                atkEnemy(enemies);
+            }
+            else if(enemies != null && attacking == false)
             {
                 hitEnemy(enemies);
             }
@@ -287,9 +313,19 @@ public class Player : MonoBehaviour
     
     void hitEnemy(enemy enemies)
     {
+        wasAttacked = true;
+        anim.SetBool("wasAttacked", true);
+        //anim.Play("Hurt");
+        lives--;
+        Destroy(enemies.gameObject);
+        velocity.x *= 0.7f;
+        
+    }
+
+    void atkEnemy(enemy enemies)
+    {
         Destroy(enemies.gameObject);
         killCount++;
-        velocity.x *= 0.7f;
     }
     
     /*

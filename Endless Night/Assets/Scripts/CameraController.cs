@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Shake camera when ground object falls
         if (isShaking)
         {
             Vector3 pos = transform.position;
