@@ -217,6 +217,19 @@ public class Player : MonoBehaviour
 
     void playerController(Vector2 pos)
     {
+        //pause or unpause background music
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            if (cameraController.backgrndMusic.mute == false)
+            {
+                cameraController.backgrndMusic.mute = true;
+            }
+            else if (cameraController.backgrndMusic.mute == true)
+            {
+                cameraController.backgrndMusic.mute = false;
+            }
+        }
+
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
@@ -258,6 +271,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.L))
             {
                 isSliding = true;
+                velocity.x *= 0.7f;
                 anim.SetBool("isSliding", true);
                 //anim.speed = 2;
             }
@@ -318,7 +332,7 @@ public class Player : MonoBehaviour
         //anim.Play("Hurt");
         lives--;
         Destroy(enemies.gameObject);
-        velocity.x *= 0.7f;
+        //velocity.x *= 0.7f;
         
     }
 

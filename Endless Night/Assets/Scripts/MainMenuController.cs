@@ -12,6 +12,7 @@ public class MainMenuController : MonoBehaviour
         audioData = GetComponent<AudioSource>();
         audioData.playOnAwake = true;
         audioData.loop = true;
+        //DontDestroyOnLoad(audioData);
     }
     public void play()
     {
@@ -33,6 +34,10 @@ public class MainMenuController : MonoBehaviour
     public void goBack()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+    public void winLoseCondition()
+    {
+        SceneManager.LoadScene("menuWinLose");
     }
 
     public void controlsMenu()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public AudioSource backgrndMusic;
     public float shakeDistance = 0.1f;
     public float shakespeed = 1;
 
@@ -14,6 +15,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         initialPosition = transform.position;
+        backgrndMusic = GetComponent<AudioSource>();
+        backgrndMusic.playOnAwake = true;
+        backgrndMusic.loop = true;
     }
 
     // Update is called once per frame

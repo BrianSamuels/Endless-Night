@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BackGroundController : MonoBehaviour
-{   
+{
     //Represents if on the same or different layer than player
     public float depth = 1;
     public float exitDistance;
