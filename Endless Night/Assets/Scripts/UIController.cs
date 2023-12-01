@@ -35,11 +35,16 @@ public class UIController : MonoBehaviour
         //Record and display player progression
         int distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " m";
-
+        
         int kills = Mathf.FloorToInt(player.killCount);
         killCountText.text = kills + " kills";
 
+       
         int lives = Mathf.FloorToInt(player.lives);
+        if (lives <= 5)
+        {
+            lifeCountText.color = Color.red;
+        }
         lifeCountText.text = lives + " lives";
 
         if (player.isDead)

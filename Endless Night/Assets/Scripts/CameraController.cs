@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         initialPosition = transform.position;
-        backgrndMusic = GetComponent<AudioSource>();
+        //backgrndMusic = GetComponent<AudioSource>();
         backgrndMusic.playOnAwake = true;
         backgrndMusic.loop = true;
     }

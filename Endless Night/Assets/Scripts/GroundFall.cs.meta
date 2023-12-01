@@ -3,7 +3,9 @@ guid: 6d8f113bca00e3043a94735183b6236d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - crumble: {fileID: 8956708509135054581, guid: 5723337ed019c8042aaa3b6c8072efcd, type: 3}
+  - player: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

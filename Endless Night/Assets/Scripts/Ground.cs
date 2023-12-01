@@ -9,7 +9,7 @@ public class Ground : MonoBehaviour
     public float groundHeight;
     public float groundRight;
     public float screenRight;
-    public int maxObstacleNum;
+    public int maxNumEnemies;
     BoxCollider2D colliderG;
 
     bool isGroundGenerated = false;
@@ -115,9 +115,9 @@ public class Ground : MonoBehaviour
             fall.fallSpeed = Random.Range(1.0f, 3.0f);
         }
 
-        //How many enemies will be created
-        int obstacleNum = Random.Range(0, maxObstacleNum);
-        for (int i = 0; i < obstacleNum; i++)
+        //How many enemies will be created on each ground
+        int numEnemies = Random.Range(0, maxNumEnemies);
+        for (int i = 0; i < numEnemies; i++)
         {
             GameObject  enmy = Instantiate(enemyHolder[Random.Range(0, enemyHolder.Count)].gameObject);
             float y = newGround.groundHeight + 1.8f;

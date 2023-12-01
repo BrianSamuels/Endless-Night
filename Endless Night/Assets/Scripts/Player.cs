@@ -5,32 +5,42 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Animator anim;
+    public GameObject player;
+
+    public AudioSource swordKill;
+    public AudioSource hurt;
+    public AudioSource slide;
+    public AudioSource crumble;
+    //public AudioSource jump;
+
+    public float distance = 0;
+    public float killCount = 0;
+    public int lives = 1;
+
     public float gravity;
     public Vector2 velocity;
     public float maxVelocity = 100;
     public float maxAcceleration = 10;
     public float acceleration = 10;
-    public float distance = 0;
-    public float killCount = 0;
-    public int lives = 1;
+    
     public float jumpVelocity = 20;
     public float groundHeight = 15;
-    public bool wasAttacked = false;
-    public bool isSliding = false;
-    public bool isAttacking = false;
-    public bool isGrounded = false;
-    public bool isHoldingJump = false;
     public float holdJumpTimer = 0.4f;
     public float maxHoldJumpTimer = 0.4f;
     public float holdingJumpTimer = 0.0f;
     public float jumpGroundThreshold = 1;
 
-    public float groundOffsetY = 2f;
+
+    public bool wasAttacked = false;
+    public bool isSliding = false;
+    public bool isAttacking = false;
+    public bool isGrounded = false;
+    public bool isHoldingJump = false;
     public bool isDead = false;
 
+    public float groundOffsetY = 2f;
     public LayerMask groundsLayerMask;
     public LayerMask obstaclesLayerMask;
-
     GroundFall fall;
 
     CameraController cameraController;
@@ -44,6 +54,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player.transform.position = new Vector3(7.9f, 9.6f, 0f);
         //rb = GetComponent<Rigidbody2D>();
         //spriter = GetComponent<SpriteRenderer>();
         //anim = GetComponent<Animator>();
@@ -64,6 +75,7 @@ public class Player : MonoBehaviour
         Vector2 pos = transform.position;
         if (isDead)
         {
+            //death.Play();
             anim.Play("death");
             //return;
         }
@@ -130,6 +142,7 @@ public class Player : MonoBehaviour
                     fall = ground.GetComponent<GroundFall>();
                     if(fall != null)
                     {
+                        crumble.Play();
                         fall.player = this;
                         cameraController.startShaking();
                     }
@@ -209,7 +222,7 @@ public class Player : MonoBehaviour
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
     
-        enemyCollisionDetection(pos, isAttacking);
+        //enemyCollisionDetection(pos, isAttacking);
         
         //Resets player position
         transform.position = pos;
@@ -217,8 +230,8 @@ public class Player : MonoBehaviour
 
     void playerController(Vector2 pos)
     {
-        //pause or unpause background music
-        if (Input.GetKeyUp(KeyCode.P))
+        //Mute or unmute background music
+        if (Input.GetKeyUp(KeyCode.M))
         {
             if (cameraController.backgrndMusic.mute == false)
             {
@@ -236,7 +249,7 @@ public class Player : MonoBehaviour
             //Holding jump button
             if (Input.GetKey(KeyCode.J))
             {
-
+                //jump.Play();
                 isGrounded = false;
                 anim.SetBool("isGrounded", false);
                 velocity.y = jumpVelocity;
@@ -270,6 +283,7 @@ public class Player : MonoBehaviour
             //Controls player slide
             if (Input.GetKeyDown(KeyCode.L))
             {
+                slide.Play();
                 isSliding = true;
                 velocity.x *= 0.7f;
                 anim.SetBool("isSliding", true);
@@ -327,6 +341,7 @@ public class Player : MonoBehaviour
     
     void hitEnemy(enemy enemies)
     {
+        hurt.Play();
         wasAttacked = true;
         anim.SetBool("wasAttacked", true);
         //anim.Play("Hurt");
@@ -338,11 +353,12 @@ public class Player : MonoBehaviour
 
     void atkEnemy(enemy enemies)
     {
+        swordKill.Play();
         Destroy(enemies.gameObject);
         killCount++;
     }
     
-    /*
+    
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -350,8 +366,8 @@ public class Player : MonoBehaviour
             Debug.Log("collision detected");
             Destroy(collision.gameObject);
             killCount++;
-            velocity.x *= 0.7f;
+            //velocity.x *= 0.7f;
         }
     }
-    */
+    
 }
