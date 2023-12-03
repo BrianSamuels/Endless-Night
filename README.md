@@ -1,5 +1,5 @@
 # Endless-Night
-My first endles runner in Unity
+My first endless runner in Unity, where the player controls a warrior that runs and fights through waves of enemies to get a high score.
 
 The music and sound effects used in this game were all obtained from "Pixabay", a royalty free stock media website. Below are the names and links to the creators of the songs used for my game.
 
