@@ -28,7 +28,7 @@ public class GroundFall : MonoBehaviour
                 player.transform.position = playerPos;
             }
 
-            //Make sure any enemies fall with the ground
+            //Make sure any enemies fall with the ground their standing on
             foreach (enemy o in enemies)
             {
                 if (o != null) 

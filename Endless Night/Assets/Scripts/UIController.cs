@@ -8,16 +8,21 @@ public class UIController : MonoBehaviour
 {
     
     Player player;
-    //TMP = text mesh pro
+    public GameObject scoreTracker;
+    private HighscoreTracker highscoreChecker;
     TMP_Text distanceText;
     TMP_Text killCountText;
     TMP_Text lifeCountText;
 
     public GameObject results;
+    public GameObject newHighscore;
     TMP_Text finalDistanceText;
     TMP_Text finalKillCountText;
     private void Awake()
     {
+        scoreTracker = GameObject.FindWithTag("highscore");
+        highscoreChecker = scoreTracker.GetComponent<HighscoreTracker>();
+
         player = GameObject.Find("Player").GetComponent<Player>();
         distanceText = GameObject.Find("DistanceText").GetComponent<TMP_Text>();
         killCountText = GameObject.Find("KillCountText").GetComponent<TMP_Text>();
@@ -27,6 +32,7 @@ public class UIController : MonoBehaviour
         finalKillCountText = GameObject.Find("FinalKillCount").GetComponent<TMP_Text>();
 
         results.SetActive(false);
+        newHighscore.SetActive(false);
     }   
 
     // Update is called once per frame
@@ -40,6 +46,7 @@ public class UIController : MonoBehaviour
         killCountText.text = kills + " kills";
 
        
+        //Alert player if life is low
         int lives = Mathf.FloorToInt(player.lives);
         if (lives <= 5)
         {
@@ -49,6 +56,22 @@ public class UIController : MonoBehaviour
 
         if (player.isDead)
         {
+            //Alerts player if they acheived a new highscore
+            if(distance * kills > highscoreChecker.highscoreLv1 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
+            {
+                newHighscore.SetActive(true);
+            }
+            if (distance * kills > highscoreChecker.highscoreLv2 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level2"))
+            {
+                newHighscore.SetActive(true);
+            }
+            if (distance * kills > highscoreChecker.highscoreLv3 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level3"))
+            {
+                newHighscore.SetActive(true);
+            }
+            //Final Output after player death
+            highscoreChecker.newDistance = distance;
+            highscoreChecker.newKill = kills;
             results.SetActive(true);
             finalDistanceText.text = distance + " m";
             finalKillCountText.text = kills + " kills";

@@ -5,27 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    public AudioSource audioData;
+    private AudioSource audioData;
+    public GameObject objectMusic;
 
     void Start()
     {
-        audioData = GetComponent<AudioSource>();
+        objectMusic = GameObject.FindWithTag("bgMusic");
+        audioData = objectMusic.GetComponent<AudioSource>();
+        // audioData = GetComponent<AudioSource>();
+        //audioData.mute = false;
+
+        if (!audioData.isPlaying)
+        {
+            audioData.Play();
+        }
         audioData.playOnAwake = true;
         audioData.loop = true;
-        //DontDestroyOnLoad(audioData);
+        
     }
     public void play()
     {
         SceneManager.LoadScene("Level1");
+        audioData.Stop();
+        //audioData.mute = true;
     }
     public void play2()
     {
         SceneManager.LoadScene("Level2");
+        audioData.Stop();
     }
 
     public void play3()
     {
         SceneManager.LoadScene("Level3");
+        audioData.Stop();
     }
     public void levelSelector()
     {
@@ -35,9 +48,9 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
-    public void winLoseCondition()
+    public void howToPlayMenu()
     {
-        SceneManager.LoadScene("menuWinLose");
+        SceneManager.LoadScene("HowToPlay");
     }
 
     public void controlsMenu()
@@ -47,6 +60,10 @@ public class MainMenuController : MonoBehaviour
     public void storyMenu()
     {
         SceneManager.LoadScene("StoryMenu");
+    }
+    public void highscoreMenu()
+    {
+        SceneManager.LoadScene("HighScore");
     }
 
     public void mute()

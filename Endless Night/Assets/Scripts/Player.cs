@@ -222,7 +222,7 @@ public class Player : MonoBehaviour
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
     
-        //enemyCollisionDetection(pos, isAttacking);
+       enemyCollisionDetection(pos, isAttacking);
         
         //Resets player position
         transform.position = pos;
@@ -358,7 +358,7 @@ public class Player : MonoBehaviour
         killCount++;
     }
     
-    
+    /*
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -369,5 +369,5 @@ public class Player : MonoBehaviour
             //velocity.x *= 0.7f;
         }
     }
-    
+    */
 }
