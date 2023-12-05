@@ -54,10 +54,40 @@ public class UIController : MonoBehaviour
         }
         lifeCountText.text = lives + " lives";
 
+        //Display results upon player death
         if (player.isDead)
         {
+            //Updates highscore if necessary and notifies player if they got a new highscore
+            if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
+            {
+                if (distance * kills > highscoreChecker.highscoreLv1)
+                {
+                    newHighscore.SetActive(true);
+                }
+                highscoreChecker.newDistance1 = distance;
+                highscoreChecker.newKill1 = kills;
+            }
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level2"))
+            {
+                if (distance * kills > highscoreChecker.highscoreLv2)
+                {
+                    newHighscore.SetActive(true);
+                }
+                highscoreChecker.newDistance2 = distance;
+                highscoreChecker.newKill2 = kills;
+            }
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level3"))
+            {
+                if (distance * kills > highscoreChecker.highscoreLv3)
+                {
+                    newHighscore.SetActive(true);
+                }
+                highscoreChecker.newDistance3 = distance;
+                highscoreChecker.newKill3 = kills;
+            }
             //Alerts player if they acheived a new highscore
-            if(distance * kills > highscoreChecker.highscoreLv1 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
+            /*
+            if (distance * kills > highscoreChecker.highscoreLv1 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
             {
                 newHighscore.SetActive(true);
             }
@@ -72,6 +102,8 @@ public class UIController : MonoBehaviour
             //Final Output after player death
             highscoreChecker.newDistance = distance;
             highscoreChecker.newKill = kills;
+            */
+            //Activate results upon player death
             results.SetActive(true);
             finalDistanceText.text = distance + " m";
             finalKillCountText.text = kills + " kills";

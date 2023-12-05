@@ -21,9 +21,15 @@ public class HighscoreTracker : MonoBehaviour
     public float score2 = 0;
     public float score3 = 0;
 
-    public float newKill;
-    public float newDistance;
-    
+    public float newKill1;
+    public float newDistance1;
+
+    public float newKill2;
+    public float newDistance2;
+
+    public float newKill3;
+    public float newDistance3;
+
     private void Awake()
     {
         GameObject[] trackerObj = GameObject.FindGameObjectsWithTag("highscore");
@@ -39,35 +45,35 @@ public class HighscoreTracker : MonoBehaviour
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
         {
-            score1 = newDistance * newKill;
+            score1 = newDistance1 * newKill1;
         }
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level2"))
         {
-            score2 = newDistance * newKill;
+            score2 = newDistance2 * newKill2;
         }
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level3"))
         {
-            score3 = newDistance * newKill;
+            score3 = newDistance3 * newKill3;
         }
         //Updates highscore for all three levels
         //score = newDistance * newKill;
         if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1") && highscoreLv1 < score1)
         {
             highscoreLv1 = score1;
-            hsDistanceLv1 = newDistance;
-            hsKillsLv1 = newKill;
+            hsDistanceLv1 = newDistance1;
+            hsKillsLv1 = newKill1;
         }
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level2") && highscoreLv2 < score2)
         {
             highscoreLv2 = score2;
-            hsDistanceLv2 = newDistance;
-            hsKillsLv2 = newKill;
+            hsDistanceLv2 = newDistance2;
+            hsKillsLv2 = newKill2;
         }
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level3") && highscoreLv3 < score3)
         {
             highscoreLv3 = score3;
-            hsDistanceLv3 = newDistance;
-            hsKillsLv3 = newKill;
+            hsDistanceLv3 = newDistance3;
+            hsKillsLv3 = newKill3;
         }
     }
 }

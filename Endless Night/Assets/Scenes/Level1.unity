@@ -1024,7 +1024,7 @@ MonoBehaviour:
   groundHeight: 0
   groundRight: 0
   screenRight: 0
-  maxNumEnemies: 4
+  maxNumEnemies: 2
   enemyHolder:
   - {fileID: 8697606347306727325, guid: 546fdf6f9b158034181ebd52f11ddeb4, type: 3}
   - {fileID: 8801267936097082080, guid: 6601df474c28590469d55bb9aa618981, type: 3}
@@ -1674,7 +1674,7 @@ MonoBehaviour:
   crumble: {fileID: 1398811506}
   distance: 0
   killCount: 0
-  lives: 15
+  lives: 10
   gravity: -400
   velocity: {x: 0, y: 0}
   maxVelocity: 100
