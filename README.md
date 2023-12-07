@@ -37,12 +37,13 @@ superjustin5000:
 <a href="https://www.youtube.com/watch?v=yshKlol5pHM&list=PL6ynPcXXvDY-dMil96IHEI8wvHO3MmQc1">MAKE AN INFINITE RUNNER game like CANABALT #1 THE PERFECT JUMP - Unity How to Tutorial</a>
 
 Ansimuz:
-<a href="https://assetstore.unity.com/packages/2d/textures-materials/tiles/parallax-dusk-mountain-background-53403">Parallax Dusk Mountain Background</a>
-
-<a href="https://assetstore.unity.com/packages/2d/characters/gothicvania-cemetery-120509">GothicVania Cemetery</a>
+<a href="https://assetstore.unity.com/packages/2d/textures-materials/tiles/parallax-dusk-mountain-background-53403">Parallax Dusk Mountain Background</a> and <a href="https://assetstore.unity.com/packages/2d/characters/gothicvania-cemetery-120509">GothicVania Cemetery</a>
 
 Clembod:
 <a href="https://assetstore.unity.com/packages/2d/characters/warrior-free-asset-195707">Warrior Free Asset</a>
+
+LuizMelo:
+<a href="https://assetstore.unity.com/packages/2d/characters/monsters-creatures-fantasy-167949">Monsters_Creatures_Fantasy</a>
 
 MiMU STUDIO:
 <a href="https://assetstore.unity.com/packages/2d/textures-materials/tiles/2d-casual-background-hd-v-3-86562">2D Casual Background HD V.3</a>
