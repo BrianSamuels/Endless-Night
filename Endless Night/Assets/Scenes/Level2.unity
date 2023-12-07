@@ -3444,9 +3444,8 @@ MonoBehaviour:
   screenRight: 0
   maxNumEnemies: 3
   enemyHolder:
-  - {fileID: 8697606347306727325, guid: 546fdf6f9b158034181ebd52f11ddeb4, type: 3}
-  - {fileID: 8801267936097082080, guid: 6601df474c28590469d55bb9aa618981, type: 3}
-  - {fileID: 8526561043743343887, guid: 6d97d3244465aef439e95726ab9dbc70, type: 3}
+  - {fileID: 8526561043743343887, guid: 3b2c28a848c461b4fae98168a72fbe4a, type: 3}
+  - {fileID: 8526561043743343887, guid: f786ba45209d5c44690c9ea4e213f044, type: 3}
 --- !u!4 &1299004389
 Transform:
   m_ObjectHideFlags: 0

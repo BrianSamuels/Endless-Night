@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
     GroundFall fall;
 
     CameraController cameraController;
+    //playerSpawner spawner;
+    //public GameObject tracker;
+    //private playerSpawner spawnPoint;
     //public float speed;
     //private float Move;
 
@@ -54,11 +57,31 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player.transform.position = new Vector3(7.9f, 9.6f, 0f);
+        //player.transform.position = new Vector3(7.9f, 9.6f, 0f);
         //rb = GetComponent<Rigidbody2D>();
         //spriter = GetComponent<SpriteRenderer>();
         //anim = GetComponent<Animator>();
         cameraController = Camera.main.GetComponent<CameraController>();
+        //spawnPoint = tracker.GetComponent<playerSpawner>();
+    }
+    void Awake()
+    {
+        //this.GetComponent<Animator>().enabled = false;
+        //transform.position = new Vector3(7.9f, 9.6f, 0f);
+        //this.GetComponent<Animator>().enabled = true;
+        //spawner = GameObject.Find("Respawn").GetComponent<playerSpawner>();
+        //transform.position = spawner.pos;
+        //transform.position = spawnPoint.pos;
+        /*
+        GameObject[] positionObj = GameObject.FindGameObjectsWithTag("Player");
+        if (positionObj.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        DontDestroyOnLoad(this.gameObject);
+        */
+        print("player current position: " + transform.position);
+        //player.transform.position = new Vector3(7.9f, 9.6f, 0f);
     }
 
     // Update is called once per frame
@@ -357,10 +380,26 @@ public class Player : MonoBehaviour
         Destroy(enemies.gameObject);
         killCount++;
     }
-    
     /*
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("platform"))
+        {
+            rb.gravityScale = 0;
+
+        }
+    }
+    */
     void OnCollisionEnter2D(Collision2D collision)
     {
+        /*
+        if (collision.gameObject.CompareTag("platform"))
+        {
+            rb.gravityScale = 0;
+            
+        }
+        */
+        /*
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("collision detected");
@@ -368,6 +407,7 @@ public class Player : MonoBehaviour
             killCount++;
             //velocity.x *= 0.7f;
         }
+        */
     }
-    */
+    
 }
