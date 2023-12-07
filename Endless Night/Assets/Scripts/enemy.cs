@@ -14,6 +14,8 @@ public class enemy : MonoBehaviour
     {
         Vector2 pos = transform.position;
 
+        //Move enemy in the opposite direction of the player at the same speed as the ground it stands on
+        //and destroy if they move out of bounds.
         pos.x -= player.velocity.x * Time.fixedDeltaTime;
         if (pos.x < -100)
         {

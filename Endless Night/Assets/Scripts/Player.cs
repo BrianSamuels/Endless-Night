@@ -40,10 +40,10 @@ public class Player : MonoBehaviour
 
     public float groundOffsetY = 2f;
     public LayerMask groundsLayerMask;
-    public LayerMask obstaclesLayerMask;
+    public LayerMask enemyLayerMask;
     GroundFall fall;
 
-    CameraController cameraController;
+    CameraShaker cameraShaker;
     //playerSpawner spawner;
     //public GameObject tracker;
     //private playerSpawner spawnPoint;
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         //rb = GetComponent<Rigidbody2D>();
         //spriter = GetComponent<SpriteRenderer>();
         //anim = GetComponent<Animator>();
-        cameraController = Camera.main.GetComponent<CameraController>();
+        cameraShaker = Camera.main.GetComponent<CameraShaker>();
         //spawnPoint = tracker.GetComponent<playerSpawner>();
     }
     void Awake()
@@ -110,6 +110,7 @@ public class Player : MonoBehaviour
 
         if (pos.y < -2 || lives == 0)
         {
+            lives = 0;
             isDead = true;
             velocity.x = 0;
             //anim.SetBool("isDead", true);
@@ -167,7 +168,7 @@ public class Player : MonoBehaviour
                     {
                         crumble.Play();
                         fall.player = this;
-                        cameraController.startShaking();
+                        cameraShaker.startShaking();
                     }
                 }
             }
@@ -191,17 +192,10 @@ public class Player : MonoBehaviour
         }
 
         // Keeps track of distance traveled
-
         //pos.x += velocity.x * Time.fixedDeltaTime;
 
         distance += velocity.x * Time.fixedDeltaTime;
-        /*
-        float checkDist = distance -1;
-        if(distance > checkDist)
-        {
-
-        }
-        */
+       
         //distance += pos.x;
         if (isGrounded)
         {
@@ -245,7 +239,7 @@ public class Player : MonoBehaviour
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
     
-       enemyCollisionDetection(pos, isAttacking);
+        //enemyCollisionDetection(pos, isAttacking);
         
         //Resets player position
         transform.position = pos;
@@ -256,13 +250,13 @@ public class Player : MonoBehaviour
         //Mute or unmute background music
         if (Input.GetKeyUp(KeyCode.M))
         {
-            if (cameraController.backgrndMusic.mute == false)
+            if (cameraShaker.backgrndMusic.mute == false)
             {
-                cameraController.backgrndMusic.mute = true;
+                cameraShaker.backgrndMusic.mute = true;
             }
-            else if (cameraController.backgrndMusic.mute == true)
+            else if (cameraShaker.backgrndMusic.mute == true)
             {
-                cameraController.backgrndMusic.mute = false;
+                cameraShaker.backgrndMusic.mute = false;
             }
         }
 
@@ -285,7 +279,7 @@ public class Player : MonoBehaviour
                 {
                     fall.player = null;
                     fall = null;
-                    cameraController.stopShaking();
+                    cameraShaker.stopShaking();
                 }
             }
 
@@ -294,7 +288,7 @@ public class Player : MonoBehaviour
             {
                 isAttacking = true;
                 anim.SetBool("isAttacking", true);
-                anim.speed = 2;
+                anim.speed = 3;
             }
             if (Input.GetKeyUp(KeyCode.K))
             {
@@ -333,7 +327,7 @@ public class Player : MonoBehaviour
     {
         //Checks if player hits/attacks an enemy
         Vector2 enmyOrigin = new Vector2(pos.x, pos.y - groundOffsetY);
-        RaycastHit2D obstHitX = Physics2D.Raycast(enmyOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, obstaclesLayerMask);
+        RaycastHit2D obstHitX = Physics2D.Raycast(enmyOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, enemyLayerMask);
         if (obstHitX.collider != null)
         {
             enemy enemies = obstHitX.collider.GetComponent<enemy>();
@@ -347,7 +341,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        RaycastHit2D obstHitY = Physics2D.Raycast(enmyOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstaclesLayerMask);
+        RaycastHit2D obstHitY = Physics2D.Raycast(enmyOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, enemyLayerMask);
         if (obstHitY.collider != null)
         {
             enemy enemies = obstHitY.collider.GetComponent<enemy>();

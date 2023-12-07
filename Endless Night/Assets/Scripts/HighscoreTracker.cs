@@ -43,6 +43,7 @@ public class HighscoreTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Save score for all three levels
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
         {
             score1 = newDistance1 * newKill1;
@@ -55,8 +56,8 @@ public class HighscoreTracker : MonoBehaviour
         {
             score3 = newDistance3 * newKill3;
         }
+
         //Updates highscore for all three levels
-        //score = newDistance * newKill;
         if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1") && highscoreLv1 < score1)
         {
             highscoreLv1 = score1;

@@ -45,10 +45,11 @@ public class HighscoreUI : MonoBehaviour
         lv3KillsText = GameObject.Find("Lv3KillsText").GetComponent<TMP_Text>();
     }
 
+    //Output display
     // Update is called once per frame
     void Update()
     {
-        //Highscore: Level 1 
+        //Highscore: Level 1 display output
         float lv1Highscore = currentHighscore.highscoreLv1;
         float lv1Kills = currentHighscore.hsKillsLv1;
         float lv1Distance = currentHighscore.hsDistanceLv1;
@@ -56,7 +57,7 @@ public class HighscoreUI : MonoBehaviour
         lv1DistanceText.text = "Distance Traveled: " + lv1Distance + " m";
         lv1KillsText.text = "Enemies Slain: " + lv1Kills;
 
-        //Highscore: Level 2 
+        //Highscore: Level 2 display output
         float lv2Highscore = currentHighscore.highscoreLv2;
         float lv2Kills = currentHighscore.hsKillsLv2;
         float lv2Distance = currentHighscore.hsDistanceLv2;
@@ -64,7 +65,7 @@ public class HighscoreUI : MonoBehaviour
         lv2DistanceText.text = "Distance Traveled: " + lv2Distance + " m";
         lv2KillsText.text = "Enemies Slain: " + lv2Kills;
 
-        //Highscore: Level 3
+        //Highscore: Level 3 display output
         float lv3Highscore = currentHighscore.highscoreLv3;
         float lv3Kills = currentHighscore.hsKillsLv3;
         float lv3Distance = currentHighscore.hsDistanceLv3;
