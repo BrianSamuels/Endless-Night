@@ -66,6 +66,7 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("HighScore");
     }
 
+    //Mute Button
     public void mute()
     {
         if (audioData.mute == false)

@@ -85,24 +85,7 @@ public class UIController : MonoBehaviour
                 highscoreChecker.newDistance3 = distance;
                 highscoreChecker.newKill3 = kills;
             }
-            //Alerts player if they acheived a new highscore
-            /*
-            if (distance * kills > highscoreChecker.highscoreLv1 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level1"))
-            {
-                newHighscore.SetActive(true);
-            }
-            if (distance * kills > highscoreChecker.highscoreLv2 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level2"))
-            {
-                newHighscore.SetActive(true);
-            }
-            if (distance * kills > highscoreChecker.highscoreLv3 && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Level3"))
-            {
-                newHighscore.SetActive(true);
-            }
-            //Final Output after player death
-            highscoreChecker.newDistance = distance;
-            highscoreChecker.newKill = kills;
-            */
+           
             //Activate results upon player death
             results.SetActive(true);
             finalDistanceText.text = distance + " m";

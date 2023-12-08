@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
     public Animator anim;
     public GameObject player;
 
@@ -41,47 +42,21 @@ public class Player : MonoBehaviour
     public float groundOffsetY = 2f;
     public LayerMask groundsLayerMask;
     public LayerMask enemyLayerMask;
+
     GroundFall fall;
-
     CameraShaker cameraShaker;
-    //playerSpawner spawner;
-    //public GameObject tracker;
-    //private playerSpawner spawnPoint;
-    //public float speed;
-    //private float Move;
-
-    //SpriteRenderer spriter;
-    //Animator anim;
-    //public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        //player.transform.position = new Vector3(7.9f, 9.6f, 0f);
-        //rb = GetComponent<Rigidbody2D>();
-        //spriter = GetComponent<SpriteRenderer>();
-        //anim = GetComponent<Animator>();
+        transform.position = new Vector2(7.9f, 9.6f);
         cameraShaker = Camera.main.GetComponent<CameraShaker>();
-        //spawnPoint = tracker.GetComponent<playerSpawner>();
     }
     void Awake()
     {
-        //this.GetComponent<Animator>().enabled = false;
-        //transform.position = new Vector3(7.9f, 9.6f, 0f);
-        //this.GetComponent<Animator>().enabled = true;
-        //spawner = GameObject.Find("Respawn").GetComponent<playerSpawner>();
-        //transform.position = spawner.pos;
-        //transform.position = spawnPoint.pos;
-        /*
-        GameObject[] positionObj = GameObject.FindGameObjectsWithTag("Player");
-        if (positionObj.Length > 1)
-        {
-            Destroy(this.gameObject);
-        }
-        DontDestroyOnLoad(this.gameObject);
-        */
-        print("player current position: " + transform.position);
-        //player.transform.position = new Vector3(7.9f, 9.6f, 0f);
+        //Make sure player in the right position when game starts
+        transform.position = new Vector2(7.9f, 9.6f);
+        print("player current position: " + transform.position); 
     }
 
     // Update is called once per frame
@@ -96,6 +71,8 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 pos = transform.position;
+
+        //player de
         if (isDead)
         {
             //death.Play();
@@ -108,7 +85,8 @@ public class Player : MonoBehaviour
             anim.SetBool("wasAttacked", false);
         }
 
-        if (pos.y < -2 || lives == 0)
+        //player dies if lives reach 0 or player falls below camera view level
+        if (pos.y < -1.5 || lives == 0)
         {
             lives = 0;
             isDead = true;
@@ -239,7 +217,7 @@ public class Player : MonoBehaviour
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
         }
     
-        //enemyCollisionDetection(pos, isAttacking);
+        enemyCollisionDetection(pos, isAttacking);
         
         //Resets player position
         transform.position = pos;
@@ -260,6 +238,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        //Player must be grounded to use jump, attack and slide movement
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
@@ -374,16 +353,7 @@ public class Player : MonoBehaviour
         Destroy(enemies.gameObject);
         killCount++;
     }
-    /*
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("platform"))
-        {
-            rb.gravityScale = 0;
-
-        }
-    }
-    */
+   
     void OnCollisionEnter2D(Collision2D collision)
     {
         /*

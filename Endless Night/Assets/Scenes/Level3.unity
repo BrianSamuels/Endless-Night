@@ -1552,7 +1552,7 @@ MonoBehaviour:
     m_Bits: 64
   enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!212 &549566205
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1718,7 +1718,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1000
+  m_SortingOrder: 9
   m_Sprite: {fileID: 21300086, guid: f6a737996a4a842e58ba28428e71d711, type: 3}
   m_Color: {r: 0.24528301, g: 0.22769669, b: 0.22769669, a: 1}
   m_FlipX: 0
