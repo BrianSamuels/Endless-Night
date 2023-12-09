@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     {
         //Make sure player in the right position when game starts
         transform.position = new Vector2(7.9f, 9.6f);
-        print("player current position: " + transform.position); 
+        //print("player current position: " + transform.position); 
     }
 
     // Update is called once per frame
